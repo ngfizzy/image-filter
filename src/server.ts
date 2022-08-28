@@ -51,9 +51,12 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
     try {
       const filteredImage: string = await filterImageFromURL(imageUrl)
+      res.sendFile(filteredImage, () => {
 
-      res.sendFile(filteredImage)
-      deleteLocalFiles([ filteredImage ])
+      })
+      res.addListener('finish', async() => {
+        await deleteLocalFiles([ filteredImage ])
+      })
     } catch(err) {
       const error = err as Error
    
@@ -73,6 +76,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         error: "Sorry :( . We couldn't process your request"
       })
 
+    } finally {
+      
     }
   })
 
