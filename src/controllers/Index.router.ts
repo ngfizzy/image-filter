@@ -15,7 +15,7 @@ router.get('/', async (_: Request, res: Response) => {
 });
 
 router.get('*', (_, res: Response) => {
-    return res.status(StatusCodes.NotFound)
+    return res.status(StatusCodes.NotFound).send({ message: '404 not found' })
 })
 
 export const IndexRouter: Router = router;
